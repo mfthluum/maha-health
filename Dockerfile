@@ -9,5 +9,8 @@ RUN a2enmod rewrite
 # Copy seluruh kodingan ke folder web server
 COPY . /var/www/html/
 
-# Expose port standar web
+# Expose port 80
 EXPOSE 80
+
+# Jalankan Apache di foreground agar Railway tidak menganggap service mati
+CMD ["apache2-foreground"]
