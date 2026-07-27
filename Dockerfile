@@ -1,19 +1,13 @@
-FROM php:8.2-apache
-
-# Matikan MPM event/worker bawaan biar gak bentrok sama prefork
-RUN a2dismod mpm_event mpm_worker || true && a2enmod mpm_prefork
+FROM php:8.2-cli
 
 # Install ekstensi MySQL untuk PHP
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Aktifkan mod_rewrite Apache
-RUN a2enmod rewrite
+# Set working directory ke folder aplikasi
+WORKDIR /var/www/html
 
-# Copy seluruh kodingan ke folder web server
-COPY . /var/www/html/
+# Copy semua file kodingan kamu
+COPY . .
 
-# Expose port
-EXPOSE 80
-
-# Jalankan entrypoint resmi Apache
-CMD ["apache2-foreground"]
+# Jalankan PHP Built-in Server langsung mendengarkan $PORT dari Railway
+CMD php -S 0.0.0.0:${PORT:-8080}
