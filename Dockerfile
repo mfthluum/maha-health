@@ -12,5 +12,5 @@ COPY . /var/www/html/
 # Expose port 80
 EXPOSE 80
 
-# Jalankan Apache di foreground agar Railway tidak menganggap service mati
-CMD ["apache2-foreground"]
+# Jalankan Apache dengan perintah resmi agar tidak ada error bentrok MPM
+CMD ["apachectl", "-D", "FOREGROUND"]
