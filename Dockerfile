@@ -1,5 +1,8 @@
 FROM php:8.2-apache
 
+# Matikan MPM event/worker bawaan biar gak bentrok sama prefork
+RUN a2dismod mpm_event mpm_worker || true && a2enmod mpm_prefork
+
 # Install ekstensi MySQL untuk PHP
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
@@ -9,11 +12,8 @@ RUN a2enmod rewrite
 # Copy seluruh kodingan ke folder web server
 COPY . /var/www/html/
 
-# Ubah konfigurasi port Apache agar mengikuti variabel PORT dari Railway (default 8080/80)
-RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
-
-# Buka port
+# Expose port
 EXPOSE 80
 
-# Jalankan Apache
-CMD ["apachectl", "-D", "FOREGROUND"]
+# Jalankan entrypoint resmi Apache
+CMD ["apache2-foreground"]
