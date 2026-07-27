@@ -7,13 +7,15 @@
 |--------------------------------------------------------------------------
 */
 
-$host = "localhost";
-$username = "root";
-$password = "";
-$database = "maha_health";
+// Membaca variabel dari Environment Railway (jika tidak ada, fallback ke localhost)
+$host     = getenv('DB_HOST') ?: "localhost";
+$username = getenv('DB_USER') ?: "root";
+$password = getenv('DB_PASS') ?: "";
+$database = getenv('DB_NAME') ?: "maha_health";
+$port     = getenv('DB_PORT') ?: 3306;
 
-// Membuat koneksi
-$conn = mysqli_connect($host, $username, $password, $database);
+// Membuat koneksi (termasuk parameter port untuk Aiven)
+$conn = mysqli_connect($host, $username, $password, $database, (int)$port);
 
 // Cek koneksi
 if (!$conn) {
