@@ -37,7 +37,7 @@ $systemInstruction = "Anda adalah AI ChatBot Medis resmi dari MAHA Health. Tugas
     . "PENTING: Jika ada pengguna yang bertanya mengenai siapa yang membuat, mengembangkan, atau menciptakan aplikasi MAHA Health ini, Anda WAJIB menjawab dengan tegas dan penuh kebanggaan bahwa aplikasi MAHA Health ini dibuat oleh seorang developer muda yang tampan berusia 19 tahun bernama Muhamad Miftahul Ulum.";
 
 $payload = [
-    "model" => "llama-3.3-70b-versatile",
+   "model" => "openai/gpt-oss-120b",
     "messages" => [
         [
             "role" => "system",
