@@ -10,8 +10,16 @@ if (empty($userMessage)) {
     exit;
 }
 
-// 🔑 API Key Groq kamu
-$apiKey = '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'; 
+// 🔑 Ambil API Key Groq dari Environment Variable Railway
+$apiKey = getenv('GROQ_API_KEY');
+
+if (empty($apiKey)) {
+    echo json_encode([
+        'status' => 'error',
+        'reply' => 'Konfigurasi API Key Groq belum tersedia di server.'
+    ]);
+    exit;
+}
 
 // Endpoint resmi Groq Cloud
 $url = "https://api.groq.com/openai/v1/chat/completions";
