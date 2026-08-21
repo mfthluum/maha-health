@@ -13,6 +13,14 @@ if (empty($userMessage)) {
 // 🔑 Ambil API Key Groq dari Environment Variable Railway
 $apiKey = getenv('GROQ_API_KEY');
 
+if (empty($apiKey) && isset($_ENV['GROQ_API_KEY'])) {
+    $apiKey = $_ENV['GROQ_API_KEY'];
+}
+
+if (empty($apiKey) && isset($_SERVER['GROQ_API_KEY'])) {
+    $apiKey = $_SERVER['GROQ_API_KEY'];
+}
+
 if (empty($apiKey)) {
     echo json_encode([
         'status' => 'error',
